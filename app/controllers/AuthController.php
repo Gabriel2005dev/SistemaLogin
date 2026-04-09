@@ -17,25 +17,6 @@ class AuthController {
 
     public function login(){
 
-        $email = $_POST['email'] ?? '';
-        $senha = $_POST['senha'] ?? '';
-
-        if (empty($email) || empty($senha)) {
-            return false;
-        }
-
-        $usuarioModel = new Usuario();
-        $usuario = $usuarioModel->buscarPorEmail($email);
-
-        if ($usuario && password_verify($senha, $usuario['senha'])) {
-
-            $_SESSION['usuario_id'] = $usuario['id'];
-            $_SESSION['usuario_nome'] = $usuario['nome'];
-
-            return true;
-        }
-
-        return false;
     }
 
     public function listarUsuarios() {

@@ -1,4 +1,4 @@
-meu db está assim 
+
 <?php 
 
 class Database {

@@ -28,15 +28,9 @@ class Usuario {
             $dados['senha']
         ]);
     }
+    public function login($email) {
 
-    public function buscarPorEmail($email) {
 
-        $sql = "SELECT * FROM usuarios WHERE email = ?";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$email]);
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function listar() {
