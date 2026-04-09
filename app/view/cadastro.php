@@ -8,7 +8,7 @@
 <body>
     <div class="Container-cadastro">
         <h1>Cadastre-se</h1>
-        <form method="POST" action="../../public/index.php?acao=cadastrar">
+        <form method="POST" action="index.php?acao=cadastrar">
 
             <label>Nome Completo:</label>
             <input type="text" name="nome" id="" placeholder="Nome completo">
@@ -28,7 +28,7 @@
             <Label>Senha:</Label>
             <input type="password" name="senha" id="" placeholder="crie sua senha">
 
-            <div class="action-btns">
+            <div class="action-btns-cadastro">
                 <button type="submit">Cria conta</button>
             </div>
     
