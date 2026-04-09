@@ -29,7 +29,11 @@ class Usuario {
         ]);
     }
     public function login($email) {
+        $sql = "SELECT id, nome, email, senha FROM usuarios WHERE email = ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$email]);
 
+        return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
 

@@ -4,34 +4,29 @@ require_once '../app/controllers/AuthController.php';
 
 session_start();
 
-// pega ação (login ou cadastrar)
 $acao = $_GET['acao'] ?? '';
+$view = $_GET['view'] ?? 'login';
 
-// verifica se veio requisição POST (formulário enviado)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $controller = new AuthController();
 
-    // 🔐 LOGIN
     if ($acao == 'login') {
-
         $resultado = $controller->login();
 
         if ($resultado) {
-            echo "Login realizado com sucesso!";
-            // você pode redirecionar depois
-            // header("Location: dashboard.php");
+            header("Location: dashboard.php");
+            exit;
         } else {
-            echo "Email ou senha inválidos!";
+            header("Location: index.php?erro=1");
+            exit;
         }
 
-    // 📝 CADASTRO
     } elseif ($acao == 'cadastrar') {
-
         $resultado = $controller->cadastrar();
 
         if ($resultado) {
-            echo "Cadastrado com sucesso!";
+            header("Location: index.php?sucesso=1");
+            exit;
         } else {
             echo "Erro ao cadastrar!";
         }
@@ -41,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 } else {
-
-    // GET → carrega a tela
-    // você pode trocar depois por login.php ou separar as views
-    require_once '../app/views/cadastro.php';
+    if ($view === 'cadastro') {
+        require_once '../app/views/cadastro.php';
+    } else {
+        require_once '../app/views/login.php';
+    }
 }

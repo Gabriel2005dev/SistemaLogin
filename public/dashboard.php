@@ -5,7 +5,7 @@ require_once __DIR__. '/../app/controllers/AuthController.php';
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: ../../public/index.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -14,9 +14,9 @@ $usuarios = $controller->listarUsuarios();
 
 ?>
 
-<h2>Bem-vindo, <?= $_SESSION['usuario_nome'] ?></h2>
+<h2>Bem-vindo, <?= htmlspecialchars($_SESSION['usuario_nome']) ?></h2>
 
-<a href="../../public/logout.php">Sair</a>
+<a href="logout.php">Sair</a>
 
 <h3>Lista de Usuários</h3>
 

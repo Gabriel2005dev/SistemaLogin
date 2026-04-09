@@ -34,6 +34,8 @@
     
         </form>
 
+        <p>Já tem conta? <a href="index.php">Faça login</a></p>
+
     </div>
  
     
