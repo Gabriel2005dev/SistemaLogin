@@ -46,4 +46,13 @@ class AuthController {
 
         return $usuario->listar();
     }
+
+    public function deletarUsuario($id) {
+        $usuario = new Usuario();
+
+        return $usuario->deletarPorId($id);
+    }
+
+
+ 
 }

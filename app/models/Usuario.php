@@ -45,4 +45,13 @@ class Usuario {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deletarPorId($id){
+        $sql = "DELETE FROM usuarios WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([$id]);
+    } 
+
+    
 }

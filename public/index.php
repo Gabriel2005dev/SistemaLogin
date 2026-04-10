@@ -31,6 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Erro ao cadastrar!";
         }
 
+
+
+    } elseif ($acao == 'deletar') {
+        $id = $_GET['id'];
+        $controller->deletar($id);
+
+
+        
+
     } else {
         echo "Ação inválida!";
     }
