@@ -1,0 +1,20 @@
+create database sistema_login;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    nome VARCHAR(150) NOT NULL,
+
+    email VARCHAR(150) NOT NULL UNIQUE,
+
+    telefone VARCHAR(20),
+
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+
+    data_nascimento DATE NOT NULL,
+
+    senha VARCHAR(255) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
