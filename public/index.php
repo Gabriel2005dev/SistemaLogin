@@ -27,18 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($resultado) {
             header("Location: index.php?sucesso=1");
             exit;
-        } else {
-            echo "Erro ao cadastrar!";
         }
 
-
+        header("Location: index.php?view=cadastro&erro=1");
+        exit;
 
     } elseif ($acao == 'deletar') {
         $id = $_GET['id'];
         $controller->deletar($id);
-
-
-        
 
     } else {
         echo "Ação inválida!";

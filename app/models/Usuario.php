@@ -28,6 +28,15 @@ class Usuario {
             $dados['senha']
         ]);
     }
+
+    public function existePorEmailOuCpf($email, $cpf) {
+        $sql = "SELECT id FROM usuarios WHERE email = ? OR cpf = ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$email, $cpf]);
+
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function login($email) {
         $sql = "SELECT id, nome, email, senha FROM usuarios WHERE email = ? LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
@@ -51,7 +60,7 @@ class Usuario {
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([$id]);
-    } 
+    }
 
-    
+
 }
