@@ -146,6 +146,68 @@ class AuthController {
         return $usuario->deletarPorId($id);
     }
 
+    public function buscarUsuarioPorId($id) {
+        $usuario = new Usuario();
+        return $usuario->buscarPorId($id);
+    }
+
+    public function editarUsuario($id, $dados) {
+        $dadosNormalizados = [
+            'nome' => trim($dados['nome'] ?? ''),
+            'email' => trim($dados['email'] ?? ''),
+            'telefone' => preg_replace('/\D+/', '', $dados['telefone'] ?? ''),
+            'data_nascimento' => trim($dados['data_nascimento'] ?? '')
+        ];
+
+        $erros = $this->validarEdicao($dadosNormalizados);
+
+        if (!empty($erros)) {
+            return ['sucesso' => false, 'erros' => $erros];
+        }
+
+        $usuario = new Usuario();
+
+        if ($usuario->existeEmailParaOutroUsuario($dadosNormalizados['email'], $id)) {
+            return ['sucesso' => false, 'erros' => ['E-mail já utilizado por outro usuário.']];
+        }
+
+        $ok = $usuario->atualizarPerfilBasico($id, $dadosNormalizados);
+
+        if (!$ok) {
+            return ['sucesso' => false, 'erros' => ['Não foi possível salvar as alterações.']];
+        }
+
+        return ['sucesso' => true, 'erros' => []];
+    }
+
+    private function validarEdicao($dados) {
+        $erros = [];
+
+        if ($dados['nome'] === '' || mb_strlen($dados['nome']) < 3) {
+            $erros[] = 'Nome é obrigatório e deve ter pelo menos 3 caracteres.';
+        }
+
+        if (!filter_var($dados['email'], FILTER_VALIDATE_EMAIL)) {
+            $erros[] = 'E-mail inválido.';
+        }
+
+        if (!preg_match('/^\d{10,11}$/', $dados['telefone'])) {
+            $erros[] = 'Telefone deve conter 10 ou 11 dígitos.';
+        }
+
+        $data = DateTime::createFromFormat('Y-m-d', $dados['data_nascimento']);
+        $hoje = new DateTime('today');
+
+        if (!$data || $data->format('Y-m-d') !== $dados['data_nascimento']) {
+            $erros[] = 'Data de nascimento inválida.';
+        } elseif ($data > $hoje) {
+            $erros[] = 'Data de nascimento não pode ser no futuro.';
+        }
+
+        return $erros;
+    }
+
+
 
  
 }

@@ -62,5 +62,36 @@ class Usuario {
         return $stmt->execute([$id]);
     }
 
+       public function buscarPorId($id) {
+        $sql = "SELECT id, nome, email, telefone, cpf, data_nascimento FROM usuarios WHERE id = ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function existeEmailParaOutroUsuario($email, $id) {
+        $sql = "SELECT id FROM usuarios WHERE email = ? AND id <> ? LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$email, $id]);
+
+        return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarPerfilBasico($id, $dados) {
+        $sql = "UPDATE usuarios
+                SET nome = ?, email = ?, telefone = ?, data_nascimento = ?
+                WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            $dados['nome'],
+            $dados['email'],
+            $dados['telefone'],
+            $dados['data_nascimento'],
+            $id
+        ]);
+    }
+
 
 }
